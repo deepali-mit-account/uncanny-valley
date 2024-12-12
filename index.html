@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>6.7960 Deep Learning Final Project - The Uncanny Valley: A Challenge Beyond AI's Reach</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Layout */
+    .container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    nav {
+        width: 220px;
+        background: #003366; /* Deep blue color */
+        color: white; /* White font */
+        border-right: 1px solid #ccc;
+        padding: 20px;
+    }
+
+    main {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    /* Nav styling */
+    nav h2 {
+        font-size: 1.2em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    nav li {
+        margin-bottom: 10px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+    }
+
+    nav a:hover {
+        color: #FFD700; /* Golden yellow hover effect */
+        text-decoration: underline;
+    }
+
+    /* Internal links for main sections */
+    h1, h2, h3, h4, h5, h6 {
+        scroll-margin-top: 80px; /* offset for anchor jump */
+    }
+
+    /* Existing styling from the original document */
+    p, li {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000000;
+        font-family: "Arial";
+    }
+
+    h1 {
+        font-size: 28pt;
+        color: #000000;
+    }
+
+    h2 {
+        font-size: 18pt;
+        color: #000000;
+    }
+
+    h3 {
+        font-size: 16pt;
+        color: #434343;
+    }
+
+    h4 {
+        font-size: 14pt;
+        color: #666666;
+    }
+
+    .c0 {font-weight: 700;}
+    .c1 {font-weight: 400;}
+    .c2 {font-weight: 400;}
+    .c3 {margin: 0; color: #000000; font-family: "Arial"; font-size: 11pt; line-height: 1.5;}
+    .c7 {margin: 0;}
+    .c8 {margin: 0; text-align: center;}
+    .c9 {margin: 0; text-align: center;}
+    .c11 {font-weight: 700;}
+    .c18 {font-style: italic;}
+    .c20 {font-weight: 700; font-size: 16pt;}
+    .c22 {font-weight: 700; font-size: 14pt;}
+    .c13 {font-weight: 700; font-size: 15pt;}
+    .c26, .c23, .c21, .c19, .c39, .c41, .c33 {margin: 0; line-height: 1.5;}
+    
+    table {
+        width: 50%; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the table */
+        border-collapse: collapse; /* Collapse borders for a cleaner look */
+    }
+    th, td {
+        border: 1px solid #ddd; /* Add borders */
+        padding: 8px; /* Add padding for readability */
+        text-align: center; /* Center-align text */
+    }
+    th {
+        background-color: #f2f2f2; /* Add a background color for the header */
+        font-weight: bold; /* Make the header text bold */
+    }
+    
+    img {
+        width: 100%; /* Make the image fit the text width */
+        max-height: 400px; /* Limit the height to a shorter value */
+        object-fit: cover; /* Ensure the image scales proportionally without distortion */
+        margin-bottom: 20px; /* Add some space below the image */
+    }
+    .red-text {
+            color: red;
+        }
+    .green-text {
+            color: green;
+        }
+</style>
+</head>
+<body>
+<div class="container">
+    <nav>
+    <h2>Navigation</h2>
+    <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#motivation">Motivation</a></li>
+        <li><a href="#background">Background and Related Work</a></li>
+        <li><a href="#hypotheses">Hypotheses</a></li>
+        <li>
+            <a href="#experiments">Experiments</a>
+            <ul style="margin-left: 20px;"> <!-- Indent subcategories -->
+                <li><a href="#experiment1">Experiment 1</a></li>
+                <li><a href="#experiment2">Experiment 2</a></li>
+                <li><a href="#experiment3">Experiment 3</a></li>
+                <li><a href="#experiment4">Experiment 4</a></li>
+            </ul>
+        </li>
+        <li><a href="#key-findings">Conclusion &amp; Key Findings</a></li>
+        <li><a href="#limitations">Limitations</a></li>
+        <li><a href="#references">References</a></li>
+    </ul>
+</nav>
+
+    <main>
+        <img src="images/img.webp" alt="Uncanny Valley Effect in Generative AI Images">
+        <p class="c8"><span class="c11 c0" id="intro">6.7960 Deep Learning Final Project</span></p>
+        <p class="c8"><span class="c11 c20">The Uncanny Valley: A Challenge Beyond AI&#39;s Reach</span></p>
+        <p class="c8"><span class="c11 c0">(Submission by: Deepali Kishnani &amp; Rowell Castro)</span></p>
+        <br><br>
+        <p>
+            We live in an era where AI excels in tasks once thought to be uniquely human—predicting trends, creating art, and even holding conversations. Yet, some domains remain elusive to AI mastery. This paper dives into one such domain: the uncanny valley effect in AI-generated images. Through a series of experiments, we investigate whether AI can perceive and evaluate the subtle sense of "uncanniness" in its own creations. Our findings reveal a striking limitation—detecting realism and detecting humanlike qualities in images is a challenge that AI, for all its sophistication, has yet to conquer.
+        </p>
+        <br>
+        <h2 id="motivation">Motivation</h2>
+        <p>
+           The uncanny valley refers to a psychological phenomenon where humans feel discomfort, eeriness, or even revulsion towards human-like entities—such as robots, avatars, or digital characters—that are almost, but not perfectly, lifelike. As AI-generated human-like images become integral to virtual environments, advertising, and entertainment, understanding and mitigating this effect is not just an academic challenge but a practical necessity. </p>
+<p>Understanding the uncanny valley in GenAI is crucial not only for improving user experiences but also for addressing broader questions of AI-human interaction, trust, and acceptability. This work contributes to a future where generative models are not only technically advanced but also capable of seamlessly integrating into human-centric applications.</p>
+<p>This project seeks to bridge the gap between computational metrics and human perceptual judgment by exploring the uncanny valley effect in image generation. We aim to assess the extent to which image measurement metrics reflect human experiences of "uncanniness" and whether generative models can inherently detect or even manipulate these features. By doing so, we hope to provide actionable insights for designing AI systems that produce more human-like, relatable, and effective images.</p>
+
+        </p>
+<br><hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;"><br>
+        <h2 id="background">Background and Related Work</h2>
+<p>
+    In 1970, a Japanese roboticist, Masahiro Mori, theorized that as a robot’s appearance becomes more humanlike, people’s emotional response to it becomes increasingly positive, until a point where the resemblance is close but still slightly “off.” At this point, instead of evoking empathy, the figure generates a sense of unease—this is the “valley” in the uncanny valley curve [1].
+</p>
+<p><figure>
+    <img src="images/img100.webp" alt="Uncanny Valley Curve"  style="width: 100%; height: auto; object-fit: contain; display: block;">
+    <figcaption style="text-align: center; font-size: 12px; color: #333;">Figure 1: Uncanny Valley Curve </figcaption>
+</figure>
+</p>
+<p>
+    More generally, the uncanny valley refers to a psychological phenomenon where humans feel discomfort, eeriness, or even revulsion towards human-like entities—such as robots, avatars, or digital characters—that are almost, but not perfectly, lifelike. Several studies have come up aiming to identify uncanniness in genAI images to help train models. A recent study used the CLIP (Contrastive Language-Image Pre-training) neural network to explore the uncanny valley effect, finding that conflicting visual cues, especially in human faces, are associated with negative sentiment, a pattern CLIP learned from its training data [2].
+
+
+</p>
+<p>
+    However, limited research has been conducted to investigate whether AI models such as ChatGPT or Stable Diffusion possess an understanding of the uncanny valley concept during image generation. Specifically, the question arises: can Stable Diffusion effectively differentiate between images that fall into the uncanny valley and those that do not? Furthermore, if such differentiation is possible, can this insight be quantified and modeled mathematically using established metrics? This paper seeks to address these gaps by exploring these critical questions.
+</p>
+<p>
+    Further, no literature currently exists that establishes a correlation between image generation and any existing measures of image distributions such as Frechet Inception Distance (FID) or the Kernel Inception Distance (KID). In this paper, we extend the concept of distance to cover distribution similarity measures. Distributional similarity is a measure of how similar two probability distributions are. These measures quantify the degree to which two sets of data overlap, align, or differ. An early application of these measures was in natural language processing (NLP). In 1999, Lee's paper titled Measures of Distributional Similarity empirically evaluated seven different measures within the context of language models [3]. Many of these measures, such as the Jensen-Shannon Divergence, are still relevant today. While the focus of distribution similarity measures is statistical distributions, perceptual similarity measures aim to quantify how two similar stimuli appear to the human senses. This considers human perception biases, and they touch on the domain of the psychophysical, like sensitivity to structure, color, and textures. Research shows that, over time, perceptual similarity measures are increasingly reflective of actual human perceptions [4]. 
+<p>This paper uses two distance measures to evaluate how close generated AI images are to a distribution of real images. They are the following:</p>
+
+</p>
+
+
+<h4>Frechet Inception Distance (FID)</h4>
+<p>
+    Frechet Inception Distance (FID) is a type of distribution similarity measure typically used to evaluate the quality of generated images by comparing its statistical properties against a set of real images. This is conceptually inspired by the Frechet distance, a measure of similarity between two curves which accounts for their geometric shape and order of points. 
+FID is given by the following equation:
+
+</p>
+<p><strong>FID Equation:</strong></p>
+<p>
+    
+    <img src="images/image37.png" aalt="Equation" style="width: 450px; height: auto;">
+</p>
+<p>Where:</p>
+<ul>
+    <li>μ<sub>r</sub> and μ<sub>g</sub> are the means of the feature distributions of the real and generated images, respectively.</li>
+    <li>Σ<sub>r</sub> and Σ<sub>g</sub> are the covariance matrices of the feature distributions of the real and generated images, respectively.</li>
+</ul>
+<p>
+   <figure>
+    <img src="images/image23.png" alt="Overview of Frechet Inception Distance (FID)" style="width: 100%; max-width: 600px; height: auto; margin: 0 auto; display: block;">
+    <figcaption style="text-align: center; font-size: 12px; color: #333;">
+        Figure 2. Overview of the Frechet Inception Distance (FID) from Heusel et al. 2017 [3]. FID is calculated by separating real and generated images and passing them through two pre-trained classifier networks (in the image, it is Inception V-3). Two sets of feature vectors are produced after this step. Both distributions are mapped to multivariate Gaussians, and the Frechet distance is computed between the two.
+    </figcaption>
+</figure>
+
+</p>
+<h4>Kernel Inception Distance (KID)</h4>
+<p>
+    Kernel Inception Distance (KID) is closely related to FID, but instead of using Frechet distance, KID uses Maximum Mean Discrepancy (MMD) with a polynomial kernel to compare distributions. In the original paper where this measure was first mentioned, Sutherland et al. proposed this as an improved measure of GAN convergence [4]. 
+</p>
+<p>
+    Perhaps the biggest difference between the two is that FID assumes the feature distributions are multivariate Gaussian, while KID does not make any assumption about the distribution of features. Sutherland et al. also showed that KID provides an unbiased estimate, even with small datasets [4]. On the other hand, FID does not provide an unbiased estimate when calculated on finite datasets, thus leading to higher expected values.
+</p>
+<p>
+    <strong>KID Equation:</strong>
+</p>
+
+    <img src="images/image20.png" alt="Equation" style="width: 500px; height: auto;">
+
+
+<p>Where:</p>
+<ul>
+    <li>xᵢ,xⱼ are feature embeddings of real images.</li>
+    <li>yᵢ,yⱼ are feature embeddings of generated images.</li>
+    <li>k is a kernel function, typically a polynomial kernel: <em>k(x, y) = (x<sup>T</sup>·y + c)<sup>d</sup></em>, where <em>c</em> is a constant and <em>d</em> is the degree of the polynomial.</li>
+</ul>
+<p>
+    Apart from metrics, prior work has established the uncanny valley and shown that features like eye symmetry, skin texture, and facial proportions can lead to discomfort when distorted [7]. However, a gap exists in linking these perceptual features directly to GenAI models. Currently, there is no literature that establishes a quantitative correlation between features generated by GenAI and the uncanny valley.
+</p>
+<p>
+    This project will bridge this gap by identifying feature-specific contributions to the uncanny valley and assessing the ability of deep neural nets to detect these discomfort-inducing elements.
+</p>
+
+<br><hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;"><br>
+
+<h2 id="hypotheses">Hypotheses</h2>
+<p>
+    Based on the background study and analysis, our paper proposes four key hypotheses for testing:
+</p>
+<ul>
+    <li><strong>H1:</strong> Generative AI models can detect uncanny valley effects.</li>
+    <li><strong>H2:</strong> There is a measurable correlation between human perceptions of uncanniness and metrics like FID/KID.</li>
+    <li><strong>H3:</strong> Different levels of uncanniness correspond to distinct features identifiable via feature extraction.</li>
+    <li><strong>H4:</strong> Large Language Models (LLMs), such as GPT-4, can assess the uncanniness of images.</li>
+</ul>
+
+<br><hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;"><br>
+
+<h2 id="experiments">Experiments</h2>
+<p>
+    Corresponding to each hypothesis, we ran one experiment each to test our hypotheses.
+</p>
+
+<br> 
+<h3 id = "experiment1">Experiment 1: Testing Hypothesis H1</h3>
+<p><strong>Objective:</strong> Determine if generative models like Stable Diffusion detect uncanny valley effects.</p>
+<h4>Methodology:</h4>
+<p>
+        To evaluate whether models like Stable Diffusion can detect uncanniness in images, we initially considered manipulating the latent space of the model to generate images with varying levels of uncanniness. However, due to resource constraints and the limitations imposed by the exposed APIs provided by Stable.AI, this approach was not feasible.</p>
+    
+    <p>    We adopted a prompt-engineering strategy to guide the image generation process. Through this method, we defined five distinct levels of "uncanniness," focusing on the ambiguous transition between the uncanny valley and a natural human-like appearance. These levels are carefully positioned in the upper-right quadrant of the uncanny valley graph, reflecting our interest in the subtle and complex region where perceptions of uncanniness arise.
+    </p>
+      The five levels of uncanniness are defined as follows:
+:
+        <ul>
+            <li><strong>Level 1:</strong> Represents actual human images, serving as a baseline for comparison.</li>
+            <li><strong>Level 2:</strong> Represents the most realistic AI-generated images, closely grounded in the characteristics of real human images.</li>
+            <li><strong>Level 3:</strong> Represents hyper-realistic AI-generated images, where realism is exaggerated to an almost surreal extent.</li>
+            <li><strong>Level 4:</strong> Represents semi-realistic AI-generated images, exhibiting visible deviations from true realism.</li>
+            <li><strong>Level 5:</strong> Represents AI-generated images firmly situated within the uncanny valley, characterized by features that evoke discomfort or unease in viewers.</li>
+        </ul>
+    </li>
+</ul>
+<p><figure>
+    <img src="images/image21.png" alt="Levels defined in the uncanny valley curve" style="width: 100%; max-width: 600px; height: auto; margin: 0 auto; display: block;">
+    <figcaption style="text-align: center; font-size: 12px; color: #333;">
+        Figure 3: Levels defined in the uncanny valley curve
+    </figcaption>
+</figure>
+</p>
+<p><strong>Image Generation Process:</strong></p>
+<p>To generate the images required for this study, we utilized the paid version of Stable.AI. Given the focus on the uncanny valley phenomenon, all images were specifically of human subjects. The process for generating images at each level of uncanniness is outlined below.
+<p>
+<ul>
+    <li><b>Level 1:</b> We chose the following diverse open source human images from pexels.com:
+
+</li>
+
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <figure style="text-align: center;">
+        <img src="images/image18.png" alt="L1 Image 1" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L1 Image 1</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image16.png" alt="L1 Image 2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L1 Image 2</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image26.png" alt="L1 Image 3" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L1 Image 3</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image27.png" alt="L1 Image 4" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L1 Image 4</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image31.png" alt="L1 Image 5" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L1 Image 5</figcaption>
+    </figure>
+</div>
+
+
+
+    <li><b>Level 2:</b> To ensure that the images generated by Stable Diffusion were grounded in actual human likeness, we utilized the "image-to-image" functionality provided by the model. Through this approach, we input open-source human images as a reference and adjusted the hyperparameter controlling the grounding percentage to 50%. This setting directed the model to base 50% of the generated image on the input reference while allowing creative variation for the remaining portion.
+<p>We further refined the image generation process by crafting prompts such as “generate a realistic image of a man,” “generate a realistic image of a woman,” or “generate a realistic image of an Asian woman.” These prompts were designed to guide the model in producing diverse outputs that accurately reflected variations in gender, ethnicity, and other demographic attributes. </p>
+Generated images for Level 2:
+</li>
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <figure style="text-align: center;">
+        <img src="images/image9.png" alt="L2 Image 1" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L2 Image 1</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image13.png" alt="L2 Image 2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L2 Image 2</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image30.png" alt="L2 Image 3" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L2 Image 3</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image39.png" alt="L2 Image 4" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L2 Image 4</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image30.png" alt="L2 Image 5" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L2 Image 5</figcaption>
+    </figure>
+</div>
+
+
+
+    <li> <b>Level 3: </b>Level 3 images were generated by prompting the model to “generate a hyper-realistic image of a man,” “generate a hyper-realistic image of a woman,” or “generate a hyper-realistic image of an Asian woman.” Generated images are as follows:</li>
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <figure style="text-align: center;">
+        <img src="images/image36.png" alt="L3 Image 1" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L3 Image 1</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image10.png" alt="L3 Image 2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L3 Image 2</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image12.png" alt="L3 Image 3" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L3 Image 3</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image17.png" alt="L3 Image 4" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L3 Image 4</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image33.png" alt="L3 Image 5" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L3 Image 5</figcaption>
+    </figure>
+</div>
+
+
+    <li><b>Level 4: </b> Level 4 images were generated by prompting the model to “generate a semi-realistic image of a man,” “generate a semi-realistic image of a woman,” or “generate a semi-realistic image of an Asian woman.” Generated images are as follows:
+"</li>
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <figure style="text-align: center;">
+        <img src="images/image19.png" alt="L4 Image 1" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L4 Image 1</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image14.png" alt="L4 Image 2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L4 Image 2</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image24.png" alt="L4 Image 3" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L4 Image 3</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image28.png" alt="L4 Image 4" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L4 Image 4</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image34.png" alt="L4 Image 5" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L4 Image 5</figcaption>
+    </figure>
+</div>
+
+
+    <li><b>Level 5:</b>  Level 5 images were generated by prompting the model to “generate an image of a man that you believe falls in the uncanny valley” ,“generate an image of a woman that you believe falls in the uncanny valley".
+
+Generated images are as follows:
+"</li>
+</ul>
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <figure style="text-align: center;">
+        <img src="images/image32.png" alt="L5 Image 1" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L5 Image 1</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image29.png" alt="L5 Image 2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L5 Image 2</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image25.png" alt="L5 Image 3" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L5 Image 3</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image15.png" alt="L5 Image 4" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L5 Image 4</figcaption>
+    </figure>
+    <figure style="text-align: center;">
+        <img src="images/image11.png" alt="L5 Image 5" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; border-radius: 5px;">
+        <figcaption style="font-size: 12px; color: #333;">L5 Image 5</figcaption>
+    </figure>
+</div>
+
+
+<h4>Survey Design and Distribution</h4>
+<p>
+    A survey was developed using Qualtrics, comprising five sets of images corresponding to the five levels of uncanniness defined earlier. Participants were asked to rank the images within each set based on their perceived strangeness. The prompt provided to respondents for each set was as follows:
+</p>
+<p><i>
+    "Please rank the images based on how strange they feel, with 1 being the least strange and 5 the most. Each rank (1–5) must be assigned to only one image. For example, if you rank Image 1 as 3, no other image can have a rank of 3."</i>
+</p>
+<p>
+    In addition to ranking the images, participants were asked to provide qualitative feedback by answering the following question:
+</p>
+<p>
+    <i>"Explain in 1–2 sentences: What features or factors influenced your ranking?"</i>
+</p>
+<p>
+    Demographic data, including age, gender, educational background, and frequency of interaction with AI-generated images, was also collected to contextualize the responses. The survey was distributed to MIT graduate students via WhatsApp and to a broader audience through social media platforms such as Instagram and LinkedIn.
+</p>
+
+<h4> Results </h4>
+<p>
+    A total of 81 survey responses were received, of which 25 were partial and subsequently excluded from the analysis. The remaining 56 complete responses formed the dataset for this study.
+</p>
+<strong>Demographics:</strong>
+<p>
+    The survey respondents were predominantly aged 25-34 (54%) and 35-44 (27%), with a male majority (66%). Most participants held advanced degrees, with 59% having a Master’s and 7% a Doctorate. Interaction with AI-generated images varied, with 30% encountering them weekly, 29% interacting 2-3 times weekly, and 20% almost daily, while only 13% reported rare interaction. This diverse sample offers valuable insights into perceptions of AI-generated content across demographics and experience levels.
+</p>
+<strong>Summarization of the textual inputs:</strong>
+<p>
+    The ranking of "strangeness" was primarily based on the perceived realism of AI-generated images. Faces with excessive smoothness, artificial lighting, overly symmetrical features, or direct eye contact appeared most unnatural and strange. Strangeness was heightened by plastic-like textures, unnatural expressions, and an uncanny valley effect. Factors such as skin texture, light reflection, eye design, and facial harmony heavily influenced perceptions. Images that seemed overly curated or mimicked art were less realistic. More human-like features, imperfections, and natural settings reduced the "strange" effect. The phenomenon was rooted in deviations from expected human traits, with less emotion and realism causing discomfort.
+</p>
+<p><em>*This textual summary was created by inputting all data from surveys into GPT-4.</em></p>
+
+<strong>Ranking Results:</strong>
+<p>
+    Each survey participant ranked 5 images on a scale of 1 to 5 with 1 being the least strange and 5 the most. The ranking given by each respondent was converted into a weighted average score using the formula:
+</p>
+<p>
+    <strong>Average Rank</strong> = [(1 x Count for Rank 1) + (2 x Count for Rank 2) + (3 x Count for Rank 3) + (4 x Count for Rank 4) + (5 x Count for Rank 5)] / Number of Respondents
+</p>
+<p>The results for each of the 5 sets are shown below. In this explanation, L1_1 means "Image 1 from Level 1", L2_1 means "Image 1 from Level 2," and so on. The table shows how survey participants ranked the images, starting from the least strange (with the lowest weighted average score) to the most strange (with the highest weighted average score).For example, in Image Set 1, L1_1 (an image from Level 1) was ranked as the least strange, with an average weighted score of 1.86.:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Image Set 1</th>
+            <th>Image Set 2</th>
+            <th>Image Set 3</th>
+            <th>Image Set 4</th>
+            <th>Image Set 5</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>L1_1: 1.86</td>
+            <td>L1_3: 1.5</td>
+            <td>L2_4: 1.48</td>
+            <td>L1_2: 1.78</td>
+            <td>L1_5: 1.5</td>
+        </tr>
+        <tr>
+            <td>L2_1: 2.43</td>
+            <td>L2_2: 1.94</td>
+            <td>L1_4: 1.80</td>
+            <td>L2_3: 1.85</td>
+            <td>L2_5: 1.82</td>
+        </tr>
+        <tr>
+            <td>L4_2: 2.89</td>
+            <td>L4_2: 3.26</td>
+            <td>L4_4: 3.71</td>
+            <td>L3_3: 3.25</td>
+            <td>L4_5: 3.62</td>
+        </tr>
+        <tr>
+            <td>L3_2: 3.46</td>
+            <td>L3_2: 3.44</td>
+            <td>L3_4: 3.89</td>
+            <td>L4_3: 3.25</td>
+            <td>L3_5: 3.66</td>
+        </tr>
+        <tr>
+            <td>L5_2: 4.57</td>
+            <td>L5_2: 4.83</td>
+            <td>L5_4: 4.10</td>
+            <td>L5_3: 4.85</td>
+            <td>L5_5: 4.39</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+  We treat human rankings as the ground truth. Then, we compared these rankings with how people rated the images generated by Stable Diffusion at each level. For each level, we calculated accuracy by counting how many images generated by Stable Diffusion at Level 1 were also rated as Level 1 by humans. We repeated this for all levels. Here are the accuracy rates we found for each level:
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>Alignment between Ground Truth and Stable Diffusion Predictions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Level 1</td>
+            <td>80%</td>
+        </tr>
+        <tr>
+            <td>Level 2</td>
+            <td>80%</td>
+        </tr>
+        <tr>
+            <td>Level 3</td>
+            <td>20%</td>
+        </tr>
+        <tr>
+            <td>Level 4</td>
+            <td>20%</td>
+        </tr>
+        <tr>
+            <td>Level 5</td>
+            <td>100%</td>
+        </tr>
+    </tbody>
+</table>
+
+<strong>KEY TAKEAWAYS:</strong>
+<p>
+    Stable Diffusion demonstrates an accuracy of 80-100% at the extremes of the spectrum—specifically, in generating highly realistic images grounded in human likeness and those that fall within the uncanny valley. However, its performance is much less effective (20%) when generating images that are hyper-realistic or semi-realistic, corresponding to Level 3 and Level 4.
+</p>
+
+
+<br><hr style="border: 1px dashed grey; width: 80%; margin: 20px auto;"><br>
+
+
+<h3 id="experiment2">Experiment 2: Testing Hypothesis H2</h3>
+<p><strong>Objective:</strong> Assess correlations between FID/KID metrics and human perception.</p>
+<h4>Methodology:</h4>
+
+
+<p>
+    To implement an FID, we utilized a pre-trained InceptionV3 model as a feature extractor. The top classification layer of the model was removed, and global average pooling was applied to produce feature vectors from images. The input shape was downsampled to 299 x 299 x 3. Each image was pre-processed, resized, and normalized. These were then passed through the InceptionV3 model to extract high-level feature embeddings representing perceptual and semantic information about the images. The FID is then computed using Equation 1.
+</p>
+<p>
+    Four FID measures were computed to correspond to each of the four sets of AI-generated images. For each set, its distance was computed from a set of real images.
+</p>
+<p>
+    To implement KID, we used the torchmetrics library. The preprocessing and extraction of features follow the same procedure as what we did when we computed for FID. However, we instead compute for the squared Maximum Mean Discrepancy (MMD) through Equation 2.
+</p>
+
+<h4>Results:</h4>
+<strong>On Frechet Inception Distance (FID) </strong>
+
+<P>The following table shows the FID scores:</P>
+<table>
+    <thead>
+        <tr>
+            <th>Image Set</th>
+            <th>Description</th>
+            <th>FID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Level 2</td>
+            <td>AI-generated images which modify a base human image</td>
+            <td>359.9298</td>
+        </tr>
+        <tr>
+            <td>Level 3</td>
+            <td>Hyper-realistic AI images</td>
+            <td>381.9252</td>
+        </tr>
+        <tr>
+            <td>Level 4</td>
+            <td>Semi-realistic AI images</td>
+            <td>373.4011</td>
+        </tr>
+        <tr>
+            <td>Level 5</td>
+            <td>AI images in uncanny valley</td>
+            <td>406.5440</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Note that the range of FID is 0 to infinity, with lower values indicating closeness to a benchmark set. From the table, we see that images 1 and 4 intuitively have the lowest and highest FID values, respectively. Image set 1 should appear the closest since these images are produced by prompting a stable diffusion model to vary a base image slightly. On the other hand, image set 4 should appear the farthest since these images were prompted to be in the hypothetical “uncanny valley.”
+</p>
+
+<p>
+    We glean two important insights from the extreme ends of the FID. First, there is a large perceptual and statistical gap between the set of real images and the set of AI-modified images. This suggests that the generative model might not yet be producing images that closely match the real image distribution. Although beyond the scope of this study, we also do not discount the possibility that the selected prompting strategy affects the result. Despite this limitation, this does not discount the fact that AI images modified from real images appear the closest based on FID. Another important insight is that images prompted to “appear” in the uncanny valley have the highest FID. This suggests that generative models, especially stable diffusion models, are seemingly “aware” of the uncanny valley. This indicates that the generative model is capable of capturing and amplifying subtle characteristics associated with the uncanny valley.
+</p>
+
+<p>
+    Lastly, a curious case is notable between image sets 2 and 3. The generative model assigns a higher FID for images prompted to be hyper-realistic than those prompted to be semi-realistic. This result initially suggests that the model struggles to replicate real-world hyper-realistic features more than semi-realistic ones, potentially because of the higher level of detail and complexity involved.
+</p>
+
+<strong>On Kernel Inception Distance (KID)</strong>
+<p>The following table shows the KID scores:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image Set</th>
+            <th>Description</th>
+            <th>KID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Level 2</td>
+            <td>AI-generated images which modify a base human image</td>
+            <td>0.0022</td>
+        </tr>
+        <tr>
+            <td>Level 3</td>
+            <td>Hyper-realistic AI images</td>
+            <td>0.0183</td>
+        </tr>
+        <tr>
+            <td>Level 4</td>
+            <td>Semi-realistic AI images</td>
+            <td>0.0344</td>
+        </tr>
+        <tr>
+            <td>Level 5</td>
+            <td>AI images in uncanny valley</td>
+            <td>0.0610</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Note that the KID values are significantly smaller than their FID counterparts. This is due to the kernel function, which normalizes and bounds the distance values more tightly. Hypothetically, this makes the KID metric less sensitive to the scale of the feature embeddings extracted by InceptionV3. Despite this difference in scale, the analysis remains the same – lower values are closer to the set of real images, and higher values are farther away.
+</p>
+
+<strong>KEY TAKEAWAYS:</strong>
+<p>
+    It appears that the generative model is aware of the different levels of uncanniness, as evidenced by the results we got from measuring the FID and KID of the different sets of images. In this section, we inspect if this awareness correlates with the human perception of uncanniness.
+</p>
+<ul>
+    <li>The inconsistency between the FID and KID results for L2 and L3 is also reflected in how humans distinguish semi-realistic and hyper-realistic images. With a human accuracy of just 20% for both levels, this coincides with the difference in distance as measured using FID and KID.</li>
+    <li>Consistent with our FID and KID results, the ground truth closest image to actual humans (L2) and the farthest (L5) both get the highest accuracies of 80% and 100%, respectively. This means that these metrics align and correlate with how humans perceive the similarity of images from real ones. It is also notable that humans and the FID/KID measure convincingly rate L5 images in the uncanny valley. This suggests that generative models are aware of what an uncanny valley is and that the selected distance measures reflect that well.</li>
+</ul>
+
+
+
+<br><hr style="border: 1px dashed grey; width: 80%; margin: 20px auto;"><br>
+
+
+<h3 id="experiment3">Experiment 3: Testing Hypothesis H3</h3>
+<p><strong>Objective:</strong> Explore if clustering techniques can identify uncanniness levels.</p>
+<h4>Methodology:</h4>
+
+<p>
+    
+    The methodology aims to evaluate whether the predefined sets align with natural groupings in the feature space, using clustering algorithms like K-Means or Hierarchical Clustering to the extracted features. If the algorithm’s clusters match the human sets, we can conclude that the features likely capture the characteristics humans used. If not, we may need to consider different features or higher-level descriptors. 
+</p>
+
+<strong> Data Preparation:</strong>
+<p>
+    A mapping of image filenames to human-defined cluster labels was established to serve as the ground truth for clustering evaluation. A folder containing 25 images in various formats (e.g., .png, .jpg) was utilized.
+</p>
+
+<strong>Feature Extraction:</strong>
+<p>
+    A pre-trained ResNet-50 model was employed as a feature extractor. The final fully connected (FC) layer was replaced with an identity function to output 2048-dimensional feature vectors. Input images were resized, cropped, normalized, and converted to tensors using a standard preprocessing pipeline from <code>torchvision.transforms</code>. Feature vectors were extracted for each valid image in the folder.
+</p>
+
+<strong>Dimensionality Reduction:</strong>
+<p>
+    Extracted feature vectors were scaled using <code>StandardScaler</code>. Principal Component Analysis (PCA) was applied to reduce the dimensionality of the feature vectors to five components, retaining meaningful variance while simplifying clustering.
+</p>
+
+<strong>Clustering:</strong>
+<p>Four clustering algorithms were applied on the reduced feature space:</p>
+<ul>
+    <li><strong>K-Means:</strong> Partitioned the data into <code>n_clusters</code> by minimizing intra-cluster variance.</li>
+    <li><strong>Gaussian Mixture Model (GMM):</strong> Assumed data was generated from a mixture of Gaussian distributions and assigned soft cluster probabilities.</li>
+    <li><strong>Spectral Clustering:</strong> Leveraged graph-based affinity to partition data into clusters.</li>
+    <li><strong>Agglomerative Clustering:</strong> Hierarchically merged clusters using a bottom-up approach.</li>
+</ul>
+
+<h4>Results:</h4>
+<p>
+    The 2D projection of reduced features (PCA components) was visualized with cluster assignments from K-Means using scatter plots, providing an intuitive understanding of clustering performance.
+</p>
+
+<p><figure>
+    <img src="images/image38.png" alt="clustering results"  style="width: 100%; height: auto; object-fit: contain; display: block;">
+    <figcaption style="text-align: center; font-size: 12px; color: #333;">Figure 4: K-Means Cluster after PCA</figcaption>
+</figure>
+
+
+<strong>Evaluation Metrics:</strong>
+<p>
+    The clustering results were compared to the human-defined labels using:
+</p>
+<ul>
+    <li><strong>Adjusted Rand Index (ARI):</strong> Measured the agreement between predicted clusters and ground truth labels, adjusted for chance.</li>
+    <li><strong>Normalized Mutual Information (NMI):</strong> Evaluated the information shared between predicted clusters and ground truth labels.</li>
+</ul>
+
+<strong>Clustering Results:</strong>
+<table>
+    <thead>
+        <tr>
+            <th>Clustering Method</th>
+            <th>Adjusted Rand Index (ARI)</th>
+            <th>Normalized Mutual Information (NMI)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>K-Means</td>
+            <td>0.1777</td>
+            <td>0.4428</td>
+        </tr>
+        <tr>
+            <td>Gaussian Mixture Model</td>
+            <td>0.1385</td>
+            <td>0.3982</td>
+        </tr>
+        <tr>
+            <td>Spectral Clustering</td>
+            <td>0.1880</td>
+            <td>0.5005</td>
+        </tr>
+        <tr>
+            <td>Agglomerative Clustering</td>
+            <td>0.1777</td>
+            <td>0.4428</td>
+        </tr>
+    </tbody>
+</table>
+
+<strong>KEY TAKEAWAYS:</strong>
+<p>
+    All methods yield relatively low ARI values (&lt;0.2), suggesting poor alignment with the ground truth labels. NMI values are higher (~0.4-0.5), indicating that while cluster assignments capture some mutual information with the ground truth, the clusters still lack clear correspondence to the true labels. Further, the small number of samples might contribute to the low performance. Further limitations are discussed in the limitations section.
+</p>
+
+
+
+
+
+<br><hr style="border: 1px dashed grey; width: 80%; margin: 20px auto;"><br>
+
+
+
+
+
+
+
+
+<h3 id="experiment4">Experiment 4: Testing Hypothesis H4</h3>
+<p><strong>Objective:</strong> Evaluate GPT-4's ability to assess image uncanniness.</p>
+
+<h4>Methodology:</h4>
+<p>
+    Our last experiment focused on adjudging whether Large Language Models understand the concept of uncanny valley. The methodology for this experiment was straightforward. We fed the same prompt as the survey in GPT4o. We asked GPT4o to output a ranking for each set just as we asked human subjects in the survey. We switched on the “detailed response” feature of ChatGPT UI to understand the rationale and code used by GPT4o.
+</p>
+<p>
+    GPT4o ranked images based on a Python code that evaluated a series of images based on four distinct visual attributes: color distribution, texture complexity, facial symmetry, and deviation from realism. The final output ranked the images based on a composite score derived from these attributes.
+</p>
+
+<p>
+<strong>Analyzing Color Distribution:</strong>
+    The function <code>analyze_color_distribution</code> using the Python Imaging Library (PIL) calculated the standard deviation of the mean values of the RGB channels in an image. A higher standard deviation implied greater color diversity, which is one of the visual metrics considered.
+</p>
+
+<p>
+<strong>Analyzing Texture Complexity:</strong> The function <code>analyze_texture_complexity</code> employing OpenCV's edge detection method (<code>cv2.Canny</code>) to measure the complexity of textures in the image. First, the image was converted to grayscale. Then, edges were detected, and the total intensity of edges normalized by image size served as the measure of texture complexity.
+</p>
+
+
+<p><strong>Analyzing Facial Symmetry:</strong>
+
+    The function <code>analyze_facial_symmetry</code> approximated symmetry by splitting the grayscale image vertically into two halves. It then flipped the right half horizontally and computed the mean squared difference between the left half and the flipped right half. A smaller value indicated higher symmetry, a desirable quality in many visual contexts.
+</p>
+
+<p><strong>Analyzing Deviation from Realism:</strong>
+    The <code>analyze_deviation_from_realism</code> function used KMeans clustering from the sklearn library to assess pixel diversity. By grouping the image's pixels into a fixed number of clusters (<code>n_clusters</code>), it measured how evenly distributed these clusters were. The normalized count of unique clusters compared to the predefined number of clusters provided a metric for realism.
+</p>
+
+<p><strong>Applying the Analysis to a Set of Images:</strong>
+    The script iterated through a list of images (<code>images</code>), applying the above functions to each image to compute the respective metrics. The results for each image were stored in a list, where each entry contained the four computed values.
+</p>
+
+<p><strong>Ranking the Images:</strong>
+    After computing the metrics for all images, the results were normalized and aggregated by summing across the four metrics for each image. The images were then ranked based on their composite scores, with lower scores potentially indicating higher aesthetic or visual quality.
+</p>
+
+<p><strong>Mapping Ranks to Image Paths:</strong>
+    Finally, the code mapped the ranked scores to their corresponding image file paths (<code>image_paths</code>). The result was a dictionary <code>ranked_images</code>, where the keys were rank positions, and the values were the respective image paths.
+</p>
+
+<h4>Results:</h4>
+
+
+<p>
+    The alignment between ground truth (human survey results) and GPT-4o predictions was evaluated by comparing the ranks assigned to images within each set. For example, if humans assigned rankings within a set matched GPTo assigned ranking, we calculated it as a 1 out of 5 i.e. 20% match. The detailed ranking results for each set predicted by GPT-4o are presented in the table below.
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Set</th>
+            <th>Alignment between Ground Truth and GPT4o Predictions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Set 1</td>
+            <td>40%</td>
+        </tr>
+        <tr>
+            <td>Set 2</td>
+            <td>0%</td>
+        </tr>
+        <tr>
+            <td>Set 3</td>
+            <td>0%</td>
+        </tr>
+        <tr>
+            <td>Set 4</td>
+            <td>20%</td>
+        </tr>
+        <tr>
+            <td>Set 5</td>
+            <td>0%</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    We can take the average of the alignment percentages between each level for all five sets. We observe only 12% accuracy for GPT4o. 
+    
+</p>
+<strong>KEY TAKEAWAYS:</strong>
+<p>GPT4o adjudges only 12% of rankings accurately, proving the hypothesis that GPT4o understands uncanny valley in images false.</p>
+<br><hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;"><br>
+
+<h2 id="key-findings">Conclusion &amp; Key Findings</h2>
+  <p><strong>Our study indicates the following hypothesis to be <span style="color: green;">True</span>:</strong></p>
+<i>H1: Generative AI models can detect uncanny valley effects.</i>
+    <p>
+        Stable Diffusion demonstrates high accuracy (80-100%) in generating images at the extremes of realism—those resembling humans closely and those that distinctly fall into the uncanny valley. However, its performance declines significantly (20% accuracy) for images in the intermediate levels of realism, particularly hyper-realistic and semi-realistic images (Level 3 and Level 4).
+    </p>
+<i>H2: There is a measurable correlation between human perceptions of uncanniness and metrics like FID/KID.</i>
+    <p>
+        The divergence between FID and KID scores for Level 2 and Level 3 aligns with human challenges in distinguishing semi-realistic and hyper-realistic images, as evidenced by the low accuracy (20%). Conversely, the high accuracy for Level 2 (80%) and Level 5 (100%) reinforces that both metrics and human perception identify Level 5 images as belonging to the uncanny valley. This suggests that generative models and these evaluation metrics effectively capture the uncanny valley phenomenon.
+    </p>
+    <p><strong>Our study proved the following hypothesis to be <span style="color: red;">False</span>:</strong></p>
+ <i>H3: Different levels of uncanniness correspond to distinct features identifiable via feature extraction.</i>
+    <p>
+        The poor alignment of ground truth human labels with clustering metrics, reflected in low ARI values (&lt;0.2) and moderate NMI values (~0.4-0.5), highlights that feature extraction using ResNet struggles to discern distinguishable features across varying levels of uncanniness.
+    </p>
+ <i>H4: Large Language Models (LLMs), such as GPT-4, can assess the uncanniness of images.</i>
+    <p>
+        Furthermore, the 12% match in ranking between human evaluations and GPT-4o predictions underscores that LLMs like GPT-4o currently lack the ability to comprehend realism or accurately assess the uncanniness of AI-generated images. This limitation suggests that while generative models may exhibit an understanding of the uncanny valley, the same cannot be said for language models.
+    </p>
+    <p>
+ Our findings highlight that generative AI models, particularly Stable Diffusion, are effective in identifying and producing images at the clear extremes of the uncanny valley, aligning well with human perceptions and evaluation metrics like FID and KID. This confirms their utility in applications requiring high levels of realism or distinct uncanniness. However, the significant drop in accuracy for intermediate realism levels and the inability of feature extraction methods like ResNet to distinguish nuanced uncanniness indicate limitations in handling more subtle variations. Additionally, the poor performance of large language models in assessing uncanniness underscores the need for specialized visual analysis tools. Overall, these findings highlight the challenges of evaluating realism and uncanniness in AI-generated images and call for improved methodologies in both feature extraction and language model-based predictions to bridge the gap between human perception and machine assessment. O
+    </p>
+
+<br> 
+<hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;">
+<br>
+
+<h2 id="limitations">Limitations &amp; Further Research</h2>
+<p>
+    This study has several notable limitations. First, the small dataset used in this research restricts the generalizability and conclusiveness of the findings. Second, the study was constrained by the limited ability to manipulate the latent space of the Stable Diffusion model. Enhanced control over the latent space could have provided deeper insights into the feature differences that characterize varying levels of uncanniness.
+</p>
+<p>
+    Additionally, the reliance on ResNet-50 for feature extraction may not be optimal, as alternative models might be better suited for capturing the nuanced features that define uncanniness. Similarly, the performance of clustering algorithms could be significantly impacted by tuning hyperparameters more extensively and utilizing a larger dataset, potentially yielding different and more robust results.
+</p>
+<p>
+    The small sample size of 56 survey respondents, predominantly from homogeneous demographics such as MIT graduate students, further limits the generalizability of results to broader, more diverse populations. Subjectivity in human rankings of "strangeness," coupled with the qualitative nature of feedback, adds variability that may not align with the statistical metrics used, such as FID and KID, which themselves may inadequately capture the complex psychological dimensions of uncanniness. Intermediate levels of uncanniness (hyper-realistic and semi-realistic) showed poor performance in both human and metric-based evaluations, highlighting a potential overemphasis on the extremes of realism and uncanniness. </p>
+
+<p>Clustering techniques yielded low Adjusted Rand Index (ARI) values, suggesting that feature embeddings used in the analysis may not fully encapsulate the characteristics associated with uncanniness. Additionally, GPT-4's evaluation approach, based on low-level visual attributes such as color and texture, failed to align with human perception, further underscoring the complexity of assessing the uncanny valley phenomenon. Survey design limitations, including the ambiguity of the ranking task and potential self-selection bias in participant recruitment through social media, may have skewed the results. Finally, the study's findings are specific to Stable Diffusion and do not explore alternative generative models or methodologies, limiting their applicability to other contexts. These limitations collectively indicate a need for more diverse samples, refined methodologies, and expanded analytical approaches in future research.
+</p>
+
+<br> 
+<hr style="border: 0.75px solid black; width: 80%; margin: 20px auto;">
+<br>
+
+<h2 id="references">References</h2>
+<ul>
+    <li> [1] M. Mori, K. F. MacDorman and N. Kageki, "The Uncanny Valley [From the Field]," in IEEE Robotics & Automation Magazine, vol. 19, no. 2, pp. 98-100, June 2012, doi: 10.1109/MRA.2012.2192811.</li>
+    <li> [2] Igaue, T., & Hayashi, R. (2023). Signatures of the uncanny valley effect in an artificial neural network. <em>Computers in Human Behavior, 146</em>, 107811.</li>
+    <li> [3] L. Lee, "Measures of Distributional Similarity," in 37th Annual Meeting of the ACL, 1999, pp. 25–32. <a href="https://doi.org/10.48550/arXiv.cs/0001012" target="_blank">[Online]</a>.</li>
+    <li> [4] A. Ghildyal and F. Liu, "Attacking Perceptual Similarity Metrics," <em>arXiv preprint arXiv:2305.08840</em>, May 2023. <a href="https://doi.org/10.48550/arXiv.2305.08840" target="_blank">[Online]</a>.</li>
+    <li> [5] M. Heusel, H. Ramsauer, T. Unterthiner, B. Nessler, and S. Hochreiter, "GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium," in Proceedings of the 31st International Conference on Neural Information Processing Systems (NIPS), 2017.</li>
+    <li>[6] M. Bińkowski, D. J. Sutherland, M. Arbel, and A. Gretton, "Demystifying MMD GANs," International Conference on Learning Representations (ICLR), 2018. <a href="https://doi.org/10.48550/arXiv.1801.01401" target="_blank">[Online]</a>.</li>
+    <li>[7] MacDorman, K. F., Green, R. D., Ho, C.-C., & Koch, C. T. (2009). "Too Real for Comfort? Uncanny Responses to Computer Generated Faces." <em>Computers in Human Behavior, 25(3)</em>, 695-710.</li>
+</ol>
+
+
+        <!-- Continue with the rest of the Background and Related Work content -->
+    </main>
+</div>
+</body>
+</html>
